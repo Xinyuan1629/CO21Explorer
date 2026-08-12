@@ -190,26 +190,28 @@ Implemented:
 - Spatial and velocity prefetching.
 - Shared `Co21DataFocus` coordinate state.
 - Overview-map to full-resolution coordinate linking.
+- Visible data-focus and streaming-status panel with load progress.
+- Explicit V/X/Y focus viewports or camera-following spatial windows.
+- Per-frame upload count/byte budgets and automatic lossless R16 texture evaluation.
+- Edit-mode validation for brick edges, V/X/Y↔V/Y/X mapping and LRU eviction.
 
 Known limitations:
 
-- Texture data is currently converted to `RGBA32`, so GPU storage is larger
-  than the source uint16 data.
+- `R16` is selected automatically when supported, reducing nominal brick
+  storage from about 2 MB to 1 MB; `RHalf` is intentionally not used as a
+  bit reinterpretation because the source values are uint16, not IEEE half.
 - Texture decoding and GPU upload still occur on the main thread.
-- The visible window is not yet camera/viewport driven.
-- The cache does not yet expose a dedicated memory budget or runtime metrics UI.
-- Full integration with channel maps, moment maps and spectra is in progress.
+- Camera following is enabled on `FullResBrickWindow` by default and can be
+  replaced by `SetFocusViewport(v, x, y, tilesX, tilesY)`.
+- The cache budget is exposed as a bounded texture count plus per-frame upload
+  budgets; exact driver allocation remains GPU/platform dependent.
 
 ## Next development steps
 
-1. Add a visible data-focus and streaming-status panel.
-2. Make the visible window follow a camera or explicit focus viewport.
-3. Add per-frame upload budgets and loading progress.
-4. Evaluate `R16`/half-precision texture formats to reduce GPU memory.
-5. Connect overview maps, spectra, velocity range and full-resolution bricks as
-   one coordinated analysis workflow.
-6. Add validation tests for brick boundaries, coordinate mapping and cache
-   eviction.
+- Run Unity Test Runner for brick boundaries, coordinate mapping and LRU eviction.
+- Verify R16 rendering and edge-brick alignment on target GPUs.
+- Add request debouncing for camera-following viewport updates.
+- Refine velocity-range prefetching and migrate the status panel to Canvas UI.
 
 ## Unity version
 

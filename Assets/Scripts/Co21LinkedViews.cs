@@ -10,7 +10,7 @@ using UnityEngine.InputSystem.UI;
 /// renderer remains a separate display layer. A shared channel/point selection
 /// drives all views.
 /// </summary>
-public class Co21LinkedViews : MonoBehaviour
+    public class Co21LinkedViews : MonoBehaviour
 {
     private const int Channels = 1000;
     private const int Height = 98;
@@ -28,6 +28,7 @@ public class Co21LinkedViews : MonoBehaviour
     private int channelIndex = 349;
     private int selectedX = Width / 2;
     private int selectedY = Height / 2;
+    [Min(0)] public int velocityRangeHalfWidthChannels = 8;
     private Co21VolumePage volumePage;
     private Co21DataFocus dataFocus;
 
@@ -110,6 +111,9 @@ public class Co21LinkedViews : MonoBehaviour
         int x = Mathf.RoundToInt(selectedX / (float)(Width - 1) * (sourceX - 1));
         int y = Mathf.RoundToInt(selectedY / (float)(Height - 1) * (sourceY - 1));
         dataFocus.Set(channelIndex, x, y);
+        dataFocus.SetVelocityRange(
+            Mathf.Max(0, channelIndex - velocityRangeHalfWidthChannels),
+            Mathf.Min(Channels - 1, channelIndex + velocityRangeHalfWidthChannels));
     }
 
     private static Co21DataFocus FindDataFocus()

@@ -10,6 +10,8 @@ public class Co21DataFocus : MonoBehaviour
     public int velocity;
     public int longitude;
     public int latitude;
+    public int velocityMin;
+    public int velocityMax;
 
     public event Action Changed;
 
@@ -18,8 +20,17 @@ public class Co21DataFocus : MonoBehaviour
         if (velocity == requestedVelocity && longitude == requestedLongitude &&
             latitude == requestedLatitude) return;
         velocity = requestedVelocity;
+        velocityMin = requestedVelocity;
+        velocityMax = requestedVelocity;
         longitude = requestedLongitude;
         latitude = requestedLatitude;
+        Changed?.Invoke();
+    }
+
+    public void SetVelocityRange(int min, int max)
+    {
+        velocityMin = Mathf.Min(min, max);
+        velocityMax = Mathf.Max(min, max);
         Changed?.Invoke();
     }
 
