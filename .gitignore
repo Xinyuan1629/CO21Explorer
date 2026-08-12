@@ -122,3 +122,13 @@ InitTestScene*.unity*
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+
+# Unity data products generated from the FITS source. The metadata JSON files
+# remain trackable; large binary products should be generated or copied into
+# StreamingAssets locally before opening the exploration scenes.
+/Assets/StreamingAssets/co21_products/*.bin
+/Assets/StreamingAssets/co21_products/*.bin.meta
+/Assets/StreamingAssets/co21_volume/*.bin
+/Assets/StreamingAssets/co21_volume/*.bin.meta
+/Assets/StreamingAssets/fullres_tiles/*.u16
+/Assets/StreamingAssets/fullres_tiles/*.u16.meta
